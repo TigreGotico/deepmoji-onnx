@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "deepmoji-onnx"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Tiny inference library for DeepMoji exported to ONNX"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
@@ -29,3 +29,6 @@ deepmoji-export = "export:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["deepmoji_onnx*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "deepmoji_onnx.version.__version__"}
