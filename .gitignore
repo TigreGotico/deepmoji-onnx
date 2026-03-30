@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+build/
+
+# ONNX models — too large for git; hosted on HuggingFace
+*.onnx
+*.onnx.part
+
+# Preprocessed/intermediate model files
+*_tmp.onnx
+*_preproc.onnx
+*_loop*.onnx
+*_raw.onnx
+
+# Vocabulary/data (also on HuggingFace)
+vocabulary.json
+emoji_codes.json
+
+# IDE
+.idea/
+.vscode/
+
+# uv
+uv.lock

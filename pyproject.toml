@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deepmoji-onnx"
+version = "0.1.0"
+description = "Tiny inference library for DeepMoji exported to ONNX"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dependencies = [
+    "onnxruntime>=1.16",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+export = [
+    "torch>=2.0",
+    "onnx>=1.14",
+]
+dev = [
+    "pytest>=7",
+    "pytest-cov",
+]
+
+[project.scripts]
+deepmoji-export = "export:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["deepmoji_onnx*"]
