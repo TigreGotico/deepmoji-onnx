@@ -12,21 +12,21 @@
 
 ## Bundling
 
-At 46–90 MB the models are too large to bundle inside a Python wheel (PyPI recommends
-<15 MB per file). The package downloads the selected variant on first use and caches it
+At 46-90 MB the models are too large to bundle inside a Python wheel (PyPI recommends
+under 15 MB per file). The package downloads the selected variant on first use and caches it
 in `~/.cache/deepmoji/`. See [`inference.py:DeepMojiONNX.from_pretrained`](api.md).
 
 ## Why int8 differs
 
 The int8 model uses the scripted (Loop-op) export instead of the traced (unrolled) export.
-The Loop op executes the LSTM cell differently at the hardware level, causing small
-floating-point differences that can change top-1 predictions for close races. The
-distribution and ranking of top-5 emoji are consistent.
+The Loop op runs the LSTM cell in a different numerical order at the hardware level. This
+causes small floating-point differences that can change the top-1 prediction for close
+races. The distribution and ranking of the top-5 emoji stay consistent.
 
 ## fp16 vs fp32
 
-fp16 gives identical top-1 predictions to fp32 on CPU with onnxruntime — the half-precision
-rounding is below the softmax discrimination threshold for all tested inputs.
+fp16 gives the same top-1 predictions as fp32 on CPU with onnxruntime. The half-precision
+rounding stays below the softmax discrimination threshold for all tested inputs.
 
 ## Quantization pipeline
 
@@ -37,3 +37,6 @@ pytorch_model.bin
     └─ DeepMojiONNXModel (fp32 torch) ──script─► Loop ONNX
                                        ──quantize_dynamic──► deepmoji_int8.onnx  (51 MB)
 ```
+
+---
+[← Export guide](export.md) · [Home](index.md) · [API reference →](api.md)
