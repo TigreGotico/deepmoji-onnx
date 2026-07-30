@@ -1,6 +1,6 @@
 # API Reference
 
-## `DeepMojiONNX`  — `deepmoji_onnx/inference.py:57`
+## `DeepMojiONNX` (`deepmoji_onnx/inference.py:57`)
 
 ```python
 class DeepMojiONNX:
@@ -33,7 +33,7 @@ class DeepMojiONNX:
         Use a feature-mode export for proper 2304-d embeddings."""
 ```
 
-## `DeepMojiTokenizer`  — `deepmoji_onnx/tokenizer.py:43`
+## `DeepMojiTokenizer` (`deepmoji_onnx/tokenizer.py:43`)
 
 ```python
 class DeepMojiTokenizer:
@@ -48,17 +48,17 @@ class DeepMojiTokenizer:
     def tokenize(self, sentences: list[str]) -> tuple[np.ndarray, np.ndarray]:
         """
         Returns:
-            tokens:  int64 (N, maxlen) — zero-padded token ids
-            lengths: int64 (N,)        — actual sequence lengths (≥ 1)
+            tokens:  int64 (N, maxlen), zero-padded token ids
+            lengths: int64 (N,),        actual sequence lengths (at least 1)
         """
 ```
 
 ### Tokenizer preprocessing
 
-In order: URL → `CUSTOM_URL`, @mention → `CUSTOM_AT`, number → `CUSTOM_NUMBER`,
+The tokenizer applies these steps in order: URL → `CUSTOM_URL`, @mention → `CUSTOM_AT`, number → `CUSTOM_NUMBER`,
 then lower-case, then vocabulary lookup (unknown → `CUSTOM_UNKNOWN` id=1).
 
-## `export.export()`  — `export.py:270`
+## `export.export()` (`export.py:270`)
 
 ```python
 def export(
@@ -71,3 +71,6 @@ def export(
     opset: int = 17,
 ) -> None: ...
 ```
+
+---
+[← Model variants & quantization](quantization.md) · [Home](index.md)

@@ -2,7 +2,7 @@
 
 ONNX inference library for [DeepMoji](https://github.com/bfelbo/DeepMoji) / [torchMoji](https://github.com/huggingface/torchMoji).
 
-**Runtime dependencies: `onnxruntime`, `numpy` only — no PyTorch required.**
+Runtime dependencies are `onnxruntime` and `numpy` only. The library does not need PyTorch.
 
 ## Quick start
 
@@ -33,9 +33,9 @@ feats = dm.encode(sentences)
 
 | Variant | Size  | Latency¹ | Notes |
 |---------|-------|----------|-------|
-| `fp32`  | 90 MB | ~10 ms   | Default. Unrolled LSTM, fastest runtime. |
-| `fp16`  | 46 MB | ~12 ms   | Half-precision weights, ~2× smaller. |
-| `int8`  | 51 MB | ~16 ms   | Int8-quantized Loop-op LSTM. Slight predictions shift vs fp32. |
+| `fp32`  | 90 MB | ~10 ms   | Default, unrolled LSTM, fastest runtime. |
+| `fp16`  | 46 MB | ~12 ms   | Half-precision weights, about 2x smaller. |
+| `int8`  | 51 MB | ~16 ms   | Int8-quantized Loop-op LSTM, predictions shift slightly vs fp32. |
 
 ¹ Batch of 6 sentences, CPU, AMD Ryzen 9 5950X.
 
@@ -56,22 +56,27 @@ deepmoji-export --weights pytorch_model.bin --vocab vocabulary.json --out deepmo
 deepmoji-export --weights pytorch_model.bin --vocab vocabulary.json --out deepmoji_int8.onnx --dtype int8
 ```
 
-See [`docs/export.md`](docs/export.md) for full options.
+See [`docs/export.md`](docs/export.md) for the full option list.
 
 ## Architecture
 
 DeepMoji is a 2-layer bidirectional LSTM with self-attention, trained on 1.2 B tweets
 to predict 64 emoji classes. The attention output (2304-d) is a general-purpose
-emotional sentence representation usable for transfer learning.
+emotional sentence representation you can use for transfer learning.
 
 ```
 text → tokenize → Embedding(50k, 256) → BiLSTM×2 → Attention → [Softmax(64) | 2304-d]
 ```
 
-This ONNX port rewrites the hard-sigmoid LSTM gates as `clamp(0.2x+0.5, 0, 1)` — fully
-ONNX-compatible, no `pack_padded_sequence`. Dynamic batch and sequence-length axes.
+This ONNX port rewrites the hard-sigmoid LSTM gates as `clamp(0.2x+0.5, 0, 1)`. The
+result is fully ONNX-compatible and does not need `pack_padded_sequence`. Batch size
+and sequence length are dynamic axes.
 
-See [`docs/index.md`](docs/index.md) for full architecture notes.
+See [`docs/index.md`](docs/index.md) for the full architecture notes.
+
+## Related projects
+
+- [TigreGotico/emotion-algebra](https://github.com/TigreGotico/emotion-algebra) combines lexicon-based emotion scoring with this library's neural emoji-sentiment model through its `DeepMojiONNXAdapter`.
 
 ## License
 
