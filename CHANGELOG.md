@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a2](https://github.com/TigreGotico/deepmoji-onnx/tree/0.1.1a2) (2026-07-30)
+
+[Full Changelog](https://github.com/TigreGotico/deepmoji-onnx/compare/0.1.1a1...0.1.1a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#4](https://github.com/TigreGotico/deepmoji-onnx/pull/4) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.1a1](https://github.com/TigreGotico/deepmoji-onnx/tree/0.1.1a1) (2026-03-30)
 
 [Full Changelog](https://github.com/TigreGotico/deepmoji-onnx/compare/0.1.0...0.1.1a1)
