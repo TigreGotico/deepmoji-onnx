@@ -80,4 +80,4 @@ See [`docs/index.md`](docs/index.md) for the full architecture notes.
 
 ## License
 
-Apache 2.0. Original DeepMoji weights: MIT (bfelbo/DeepMoji).
+MIT, matching upstream DeepMoji/torchMoji (bfelbo/DeepMoji, huggingface/torchMoji). Original DeepMoji weights: MIT (bfelbo/DeepMoji).
