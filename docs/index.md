@@ -1,6 +1,6 @@
 # deepmoji-onnx
 
-ONNX inference library for DeepMoji (torchMoji). Runtime requires only `onnxruntime` and `numpy`.
+ONNX inference library for DeepMoji (torchMoji). The runtime needs only `onnxruntime` and `numpy`.
 
 ## Architecture
 
@@ -19,18 +19,17 @@ tokens (B, T) int64
        [feature mode] identity                     → (B, 2304)
 ```
 
-**LSTM gates** use hard sigmoid: `clamp(0.2x + 0.5, 0, 1)` (matches original Keras/torchMoji).
+The LSTM gates use a hard sigmoid: `clamp(0.2x + 0.5, 0, 1)`. This matches the original Keras/torchMoji implementation.
 
-**Attention mask**: pad positions (token == 0) receive zero attention weight so they
-do not affect the output representation, even without `pack_padded_sequence`.
+The attention mask sets the attention weight to zero for pad positions (token == 0). Pad positions do not affect the output representation, even without `pack_padded_sequence`.
 
 ## Files
 
 | File | Description |
 |------|-------------|
 | `export.py` | PyTorch → ONNX export (fp32/fp16/int8) |
-| `deepmoji_onnx/inference.py` | `DeepMojiONNX` — `DeepMojiONNX.predict`, `.top_emojis`, `.encode` — `inference.py:35` |
-| `deepmoji_onnx/tokenizer.py` | `DeepMojiTokenizer` — `tokenizer.py:43` |
+| `deepmoji_onnx/inference.py` | `DeepMojiONNX` (`DeepMojiONNX.predict`, `.top_emojis`, `.encode`), `inference.py:35` |
+| `deepmoji_onnx/tokenizer.py` | `DeepMojiTokenizer`, `tokenizer.py:43` |
 
 ## Navigation
 

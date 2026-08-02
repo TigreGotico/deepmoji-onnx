@@ -12,7 +12,7 @@ You need the original torchMoji pretrained weights (86 MB):
 wget "https://www.dropbox.com/s/q8lax9ary32c7t9/pytorch_model.bin?dl=1" -O pytorch_model.bin
 ```
 
-And `vocabulary.json` (from this repo or from `torchMoji/model/`).
+You also need `vocabulary.json`, from this repo or from `torchMoji/model/`.
 
 ## CLI
 
@@ -23,10 +23,10 @@ deepmoji-export \
   --vocab   vocabulary.json \
   --out     deepmoji_fp32.onnx
 
-# fp16 (~2× smaller, same accuracy)
+# fp16 (about 2x smaller, same accuracy)
 deepmoji-export ... --dtype fp16 --out deepmoji_fp16.onnx
 
-# int8 (~4× smaller, slight accuracy shift)
+# int8 (about 4x smaller, slight accuracy shift)
 deepmoji-export ... --dtype int8 --out deepmoji_int8.onnx
 
 # feature extractor (2304-d embedding output, no softmax)
@@ -54,8 +54,11 @@ export(
 
 ## Implementation notes
 
-- **fp32**: traced (unrolled LSTM, ~241 Gemm nodes), fastest inference.
-- **fp16**: same graph as fp32 with all weights/compute in float16. Input tokens remain int64.
-- **int8**: scripted (Loop-op LSTM), then `quantize_dynamic` with `QuantType.QInt8`. Slightly different top-1 predictions vs fp32 due to Loop vs unrolled numerical differences.
-- All exports use `dynamo=False` (legacy TorchScript exporter) because the dynamo exporter cannot trace Python `for` loops.
-- Dynamic axes: `tokens` (batch, seq_len), `lengths` (batch), `output` (batch). Any sequence length and batch size at runtime.
+- **fp32**: traced (unrolled LSTM, about 241 Gemm nodes), fastest inference.
+- **fp16**: same graph as fp32 with all weights and compute in float16. Input tokens stay int64.
+- **int8**: scripted (Loop-op LSTM), then `quantize_dynamic` with `QuantType.QInt8`. Predictions differ slightly from fp32 because the Loop op and the unrolled op compute in different numerical order.
+- All exports use `dynamo=False` (legacy TorchScript exporter). The dynamo exporter cannot trace Python `for` loops.
+- Dynamic axes: `tokens` (batch, seq_len), `lengths` (batch), `output` (batch). The exported model accepts any sequence length and batch size at runtime.
+
+---
+[Home](index.md) · [Model variants & quantization →](quantization.md)
