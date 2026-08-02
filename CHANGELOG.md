@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2a1](https://github.com/TigreGotico/deepmoji-onnx/tree/0.1.2a1) (2026-08-02)
+
+[Full Changelog](https://github.com/TigreGotico/deepmoji-onnx/compare/0.1.1a2...0.1.2a1)
+
+**Merged pull requests:**
+
+- fix: align licence with upstream DeepMoji/torchMoji \(MIT\) [\#6](https://github.com/TigreGotico/deepmoji-onnx/pull/6) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.1a2](https://github.com/TigreGotico/deepmoji-onnx/tree/0.1.1a2) (2026-07-30)
 
 [Full Changelog](https://github.com/TigreGotico/deepmoji-onnx/compare/0.1.1a1...0.1.1a2)
